@@ -29,17 +29,30 @@ function displayQuestion(triviaQuestion) {
 
 // Handle the "New Question" button
 document.querySelector("#questionBtn").addEventListener('click', () => {
-    getTriviaQuestion().then((question) =>{
-        currentQuestion = question;
-        displayQuestion(question);
+    getTriviaQuestion().then((question) =>{   //get a random question
+        currentQuestion = question;    //update the current Question variable
+        displayQuestion(question);     //pass the question to the displayQuestion function
     })
     .catch((error) => {
-        console.log(error);
+        console.log(error); 
     })
 })
 
 
 // Handle the "Submit Answer" button
+document.querySelector("#answerBtn").addEventListener('click', () => { 
+    const userAnswer = answerDiv.value.trim().toLowerCase();  //normalizes users answer
+    console.log(userAnswer, currentQuestion.answer); //logs both answers to the console to help with debugging - I thought this was allowing us to compare?
+    if (userAnswer === currentQuestion.answer.toLowerCase()) {
+        feedbackDiv.style.color = "green";
+        feedbackMessage = "Great job! Your answer is correct.";
+    } else {
+        feedbackDiv.style.color = "red";
+        feedbackMessage = `Sorry, that is incorrect.  The correct answer is: "${currentQuestion.answer}". Try another question!`;
+    }
+    feedbackDiv.textContent = feedbackMessage; 
+})
+
 // Test game
 
 // Optional Challenge 1:  add CSS or bootstrap to make game pretty
